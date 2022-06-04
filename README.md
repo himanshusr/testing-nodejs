@@ -47,6 +47,11 @@ cp .env.sample .env
 ```
 ./node_modules/knex/bin/cli.js seed:run
 ```
+9. Run the code
+
+```
+npm run dev
+```
 
 
 ## License
