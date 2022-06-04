@@ -59,6 +59,29 @@ exports.seed = function(knex) {
 							'north indian'
 						],
 						is_open: true
+					},
+					{
+						id: '00000000-0000-0000-0000-000000000006',
+						restaurant_name: 'ShouryaGarh Villa',
+						address: 'Jodhpur Rajasthan',
+						veg_only: true,
+						cost: 'medium',
+						cuisine_types: [
+							'rajasthani'
+						],
+						is_open: true
+					},
+					{
+						id: '00000000-0000-0000-0000-000000000007',
+						restaurant_name: 'Subway Veg',
+						address: 'Bangalore',
+						veg_only: true,
+						cost: 'low',
+						cuisine_types: [
+							'french',
+							'italian'
+						],
+						is_open: true
 					}
 
 				]);
