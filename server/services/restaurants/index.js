@@ -2,31 +2,36 @@ import Restaurants from '../../models/restaurants.js';
 
 export async function getRestaurants(params) {
 	try {
-		const restaurants = await Restaurants.query().where(builder => {
-			if (params.cost) {
-				// split using , for $or condition
-				const splitCosts = params.cost.split(',');
-				splitCosts.map((cost) => (
-					builder.orWhere('cost', cost)
-				));
-			}
-		}).where(builder => {
-			if (params.cuisine) {
-				if (params.cuisine.includes(';')) {
-					// split using ; for $and condition
-					const splitCuisine = params.cuisine.split(';');
-					splitCuisine.map((cuisine) => (
-						builder.where('cuisine_types', '@>', [cuisine])
-					));
-				} else {
+		const restaurants = await Restaurants.query()
+			.where(builder => {
+				if (params.veg === 'true' || params.veg === 'false') {
+					builder.where('veg_only', params.veg);
+				}
+			}).where(builder => {
+				if (params.cost) {
 					// split using , for $or condition
-					const splitCuisine = params.cuisine.split(',');
-					splitCuisine.map((cuisine) => (
-						builder.orWhere('cuisine_types', '@>', [cuisine])
+					const splitCosts = params.cost.split(',');
+					splitCosts.map((cost) => (
+						builder.orWhere('cost', cost)
 					));
 				}
-			}
-		});
+			}).where(builder => {
+				if (params.cuisine) {
+					if (params.cuisine.includes(';')) {
+						// split using ; for $and condition
+						const splitCuisine = params.cuisine.split(';');
+						splitCuisine.map((cuisine) => (
+							builder.where('cuisine_types', '@>', [cuisine])
+						));
+					} else {
+						// split using , for $or condition
+						const splitCuisine = params.cuisine.split(',');
+						splitCuisine.map((cuisine) => (
+							builder.orWhere('cuisine_types', '@>', [cuisine])
+						));
+					}
+				}
+			});
 		return Promise.resolve(restaurants);
 	} catch (error) {
 		console.log(error);
